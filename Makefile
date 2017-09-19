@@ -141,3 +141,9 @@ clean:
 	rm -f modules.order Module.symvers
 	rm -rf .tmp_versions
 	find . -name "checklog.txt"|xargs rm -f
+
+fpm:
+	$(MAKE) -C canlib install DESTDIR=/tmp/hurga
+	$(MAKE) -C linlib install DESTDIR=/tmp/hurga
+	fpm --license GPLv2 --description "User-space libraries of KVASER libcan" --url https://github.com/marc-hanheide/kvaser_can -v 1.2.0 -f -m "Marc Hanheide <marc@hanheide.net>" -n kvaser-libcan -t deb -s dir -C /tmp/hurga .
+
